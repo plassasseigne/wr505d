@@ -16,7 +16,7 @@ defineProps(['title'])
 <style lang="scss" scoped>
 .small-cover {
   position: relative;
-  height: 290px;
+  height: 300px;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -37,6 +37,7 @@ defineProps(['title'])
 
   &__title {
     h1 {
+      margin-top: 70px;
       font-family: 'Penumbra', sans-serif;
       font-size: 64px;
     }
