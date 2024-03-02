@@ -29,14 +29,14 @@ defineProps(['data'])
     </div>
   </RouterLink>
 
-  <div v-if="data['@type'] === 'Category'" class="item-card__category">
+  <RouterLink to="#" v-if="data['@type'] === 'Category'" class="item-card__category">
     <div class="item-card__category__img">
       <img src="../assets/images/category_poster.jpg" :alt="data.name + ' picture'" />
     </div>
     <div class="item-card__category__content">
       <p>{{ data.name }}</p>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style lang="scss" scoped>
@@ -57,11 +57,22 @@ defineProps(['data'])
     margin-bottom: 60px;
     position: relative;
 
+    &:hover {
+      .item-card__category__img {
+        img {
+          transform: scale(1.025);
+        }
+      }
+    }
+
     &__img {
+      overflow: hidden;
+
       img {
         width: calc(4.347vw * 9);
         height: 296px;
         object-fit: cover;
+        transition: 0.6s ease;
       }
     }
 
@@ -72,6 +83,7 @@ defineProps(['data'])
       position: absolute;
 
       p {
+        color: white;
         font-size: 30px;
         font-family: 'Penumbra', sans-serif;
         text-align: center;
