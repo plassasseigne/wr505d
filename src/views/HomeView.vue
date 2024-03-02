@@ -1,11 +1,7 @@
 <script setup>
-
+import Cover from '../components/Cover.vue'
 </script>
 
 <template>
-  <h1>Hello world</h1>
+  <Cover></Cover>
 </template>
-
-<style scoped>
-
-</style>
