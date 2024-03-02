@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
-import Cover from '../components/Cover.vue'
+import MainCover from '../components/MainCover.vue'
 import LatestItems from '../components/LatestItems.vue'
 
 const dataMovies = ref('')
@@ -47,10 +47,10 @@ const getCategories = async () => {
 </script>
 
 <template>
-  <Cover></Cover>
-  <LatestItems v-if="dataMovies" :data="dataMovies['hydra:member']" :title="'The latest releases'"></LatestItems>
-  <LatestItems v-if="dataActors" :data="dataActors['hydra:member']" :title="'The latest actors'"></LatestItems>
-  <LatestItems v-if="dataCategories" :data="dataCategories['hydra:member']" :title="'The trending categories'"></LatestItems>
+  <MainCover></MainCover>
+  <LatestItems v-if="dataMovies" :data="dataMovies['hydra:member']" :title="'The latest releases'" :route="'movies'"></LatestItems>
+  <LatestItems v-if="dataActors" :data="dataActors['hydra:member']" :title="'The latest actors'" :route="'actors'"></LatestItems>
+  <LatestItems v-if="dataCategories" :data="dataCategories['hydra:member']" :title="'The trending categories'" :route="'categories'"></LatestItems>
 </template>
 
 <style lang="scss">
