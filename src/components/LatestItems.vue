@@ -1,14 +1,14 @@
 <script setup>
 import ItemCard from '../components/ItemCard.vue'
 
-defineProps(['data', 'title'])
+defineProps(['data', 'title', 'route'])
 </script>
 
 <template>
 <div class="latest-items" v-if="data">
   <div class="latest-items__title">
     <h3>{{ title }}</h3>
-    <span>See more</span>
+    <RouterLink :to="route">See more</RouterLink>
   </div>
   <div class="latest-items__list">
     <ItemCard v-for="item in data.slice(0, 4)" :data="item"></ItemCard>
