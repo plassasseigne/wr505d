@@ -68,25 +68,43 @@ const onPrevPage = async () => {
     console.log(error)
   }
 }
-
 </script>
 
 <template>
   <SmallCover :title="'Movies'"></SmallCover>
-  <div v-if="dataMovies" class="items-list">
-    <ItemCard v-for="item in dataMovies['hydra:member']" :data="item"></ItemCard>
+  <div v-if="dataMovies" class="archive">
+    <div class="items-list">
+      <ItemCard v-for="item in dataMovies['hydra:member']" :data="item"></ItemCard>
+    </div>
+    <div class="pagination">
+      <div @click="onPrevPage" class="prev-arrow">
+        <img src="../assets/images/pagination_arrow.svg" />
+      </div>
+      <div @click="onNextPage" class="next-arrow">
+        <img src="../assets/images/pagination_arrow.svg" />
+      </div>
+    </div>
   </div>
-  <div class="pagination">
-    <div @click="onPrevPage" class="prev-arrow">
-      <img src="../assets/images/pagination_arrow.svg" />
-    </div>
-    <div @click="onNextPage" class="next-arrow">
-      <img src="../assets/images/pagination_arrow.svg" />
-    </div>
+
+  <div v-else class="loader">
+    <p>Loading, please wait...</p>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.loader {
+  width: 100vw;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-family: 'Penumbra', sans-serif;
+    font-size: 32px;
+  }
+}
+
 .pagination {
   width: 100%;
   display: flex;
