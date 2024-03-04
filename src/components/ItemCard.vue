@@ -19,7 +19,7 @@ defineProps(['data'])
     </div>
   </RouterLink>
 
-  <RouterLink to="#" v-if="data['@type'] === 'Actor'" class="item-card">
+  <RouterLink v-if="data['@type'] === 'Actor'" :to="{name: 'actor-single', params: {id: data.id}}" class="item-card">
     <div class="item-card__img">
       <img src="../assets/images/actor_poster.jpeg" :alt="data.last_name + ' picture'" />
     </div>
