@@ -1,36 +1,57 @@
-<script>
+<script setup>
+import { useRoute, RouterLink } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+import Button from '../components/Button.vue'
 
+const data = ref('')
+const next = ref('')
+
+onMounted(async() => {
+  getMovie()
+})
+
+const getMovie = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/movies?page=1')
+
+    data.value = response.data['hydra:member'][0]
+    next.value = response.data['hydra:member'][1]
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
 
 <template>
-  <section class="main-cover">
+  <section v-if="data" class="main-cover">
     <div class="main-cover__bg">
       <img src="../assets/images/cover_background.jpg" alt="Movie poster" />
       <div class="dark-filter"></div>
     </div>
     <div class="main-cover__content">
-      <h2>Lorem Ipsum</h2>
+      <h2>{{ data.title }}</h2>
       <div class="main-cover__infos">
         <div class="score">
-          <span>9.4</span>
+          <span>{{ data.metascore }}%</span>
         </div>
         <div class="duration">
-          <span>1H54</span>
+          <span>{{ data.duration }} min</span>
         </div>
         <div class="release">
-          <span>2019</span>
+          <span>{{ data.release_date.substring(0, 4) }}</span>
         </div>
         <div class="age">
           <span>13+</span>
         </div>
       </div>
-      <span class="category">Category</span>
+      <span class="category">{{ data.category.name }}</span>
       <p class="synopsis">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices tortor vel porttitor ornare. Integer quis felis neque. Nulla eleifend in dui in fringilla...</p>
     </div>
     <div class="main-cover__next">
       <div class="main-cover__next-text">
         <span class="next">Next</span>
-        <p class="title">Lorem Ipsum</p>
+        <p class="title">{{ next.title }}</p>
       </div>
       <div class="main-cover__next-img">
         <img src="../assets/images/cover_next.jpg" alt="Next movie poster">

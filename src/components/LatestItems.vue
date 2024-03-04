@@ -8,7 +8,7 @@ defineProps(['data', 'title', 'route'])
 <div class="latest-items" v-if="data">
   <div class="latest-items__title">
     <h3>{{ title }}</h3>
-    <RouterLink :to="route">See more</RouterLink>
+    <RouterLink class="latest-items__route" :to="route">See more</RouterLink>
   </div>
   <div class="latest-items__list">
     <ItemCard v-for="item in data.slice(0, 4)" :data="item"></ItemCard>
@@ -32,6 +32,10 @@ defineProps(['data', 'title', 'route'])
       font-size: 24px;
       font-family: 'Penumbra', sans-serif;
     }
+  }
+
+  &__route {
+    color: white;
   }
 
   &__list {
