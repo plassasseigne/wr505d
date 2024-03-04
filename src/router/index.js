@@ -4,6 +4,13 @@ import MoviesView from '../views/MoviesView.vue'
 import ActorsView from '../views/ActorsView.vue'
 import CategoriesView from '../views/CategoriesView.vue'
 
+import MovieView from '../views/MovieView.vue'
+import ActorView from '../views/ActorView.vue'
+
+import MovieAdd from '../views/MovieAdd.vue'
+import ActorAdd from '../views/ActorAdd.vue'
+import CategoryAdd from '../views/CategoryAdd.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -12,6 +19,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
+    // Item archive
     {
       path: '/movies',
       name: 'movies',
@@ -26,6 +34,33 @@ const router = createRouter({
       path: '/categories',
       name: 'categories',
       component: CategoriesView
+    },
+    // Item informations
+    {
+      path: '/movie/:id',
+      name: 'movie-single',
+      component: MovieView
+    },
+    {
+      path: '/actor/:id',
+      name: 'actor-single',
+      component: ActorView
+    },
+    // Item creation
+    {
+      path: '/movie/add',
+      name: 'movie-add',
+      component: MovieAdd
+    },
+    {
+      path: '/actor/add',
+      name: 'actor-add',
+      component: ActorAdd
+    },
+    {
+      path: '/category/add',
+      name: 'category-add',
+      component: CategoryAdd
     },
   ]
 })
