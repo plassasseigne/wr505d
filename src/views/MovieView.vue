@@ -21,7 +21,6 @@ const getMovie = async () => {
     console.log(error)
   }
 }
-
 </script>
 
 <template>
@@ -118,7 +117,7 @@ const getMovie = async () => {
 .movie-infos {
   padding-top: 80px;
   padding-bottom: 80px;
-  margin-left: 4.347vw;
+  padding-left: 4.347vw;
   width: calc(4.347vw * 21);
 
   @media (min-width: 1024px) {
@@ -167,7 +166,8 @@ const getMovie = async () => {
 
   &__storyline {
     p {
-      font-size: 18px;
+      color: #9C9C9C;
+      font-size: 16px;
     }
   }
 
@@ -287,6 +287,7 @@ const getMovie = async () => {
       margin-left: calc(4.347vw * 2);
       width: calc(4.347vw * 17);
       flex-direction: row;
+      justify-content: left;
       align-items: center;
     }
   }
