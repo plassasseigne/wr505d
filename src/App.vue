@@ -13,9 +13,9 @@ import { RouterLink, RouterView } from 'vue-router'
         </div>
         <div class="menu__content">
           <div class="menu__links">
-            <RouterLink to="#">Movies</RouterLink>
-            <RouterLink to="#">Actors</RouterLink>
-            <RouterLink to="#">Categories</RouterLink>
+            <RouterLink to="/movies">Movies</RouterLink>
+            <RouterLink to="/actors">Actors</RouterLink>
+            <RouterLink to="/categories">Categories</RouterLink>
           </div>
           <div class="menu__buttons">
             <RouterLink to="#">
@@ -43,9 +43,9 @@ import { RouterLink, RouterView } from 'vue-router'
           <img src="./assets/images/logo_white.svg" alt="Scaryview logo" />
         </div>
         <div class="footer__links">
-          <RouterLink to="#">Movies</RouterLink>
-          <RouterLink to="#">Actors</RouterLink>
-          <RouterLink to="#">Categories</RouterLink>
+          <RouterLink to="/movies">Movies</RouterLink>
+          <RouterLink to="/actors">Actors</RouterLink>
+          <RouterLink to="/categories">Categories</RouterLink>
           <RouterLink to="#">Account</RouterLink>
         </div>
         <div class="footer__subscribe">
