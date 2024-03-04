@@ -1,9 +1,11 @@
 <script setup>
+import { RouterLink } from 'vue-router';
+
 defineProps(['data'])
 </script>
 
 <template>
-  <RouterLink to="'#'" v-if="data['@type'] === 'Movie'" class="item-card">
+  <RouterLink v-if="data['@type'] === 'Movie'" :to="{name: 'movie-single', params: {id: data.id}}" class="item-card">
     <div class="item-card__img">
       <img src="../assets/images/movie_poster.jpg" :alt="data.title + ' poster'" />
     </div>
