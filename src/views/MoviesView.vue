@@ -8,6 +8,9 @@ const dataMovies = ref('')
 const nextPage = ref('')
 const prevPage = ref('')
 
+let search = ref('')
+let allMovies = ref('')
+
 onMounted(async() => {
   getMovies()
 })
@@ -17,13 +20,13 @@ const getMovies = async () => {
     const response = await axios.get('http://127.0.0.1:8000/api/movies')
 
     dataMovies.value = response.data
+    allMovies.value = response.data
     nextPage.value = response.data['hydra:view']['hydra:next']
 
     if (response.data['hydra:view']['hydra:previous']) {
       prevPage.value = response.data['hydra:view']['hydra:previous']
     }
 
-    document.querySelector('.prev-arrow').classList.add('disable')
   } catch (error) {
     console.log(error)
   }
@@ -68,16 +71,39 @@ const onPrevPage = async () => {
     console.log(error)
   }
 }
+
+const searchFilter = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/movies?title=' + search.value)
+
+    dataMovies.value = response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
 
 <template>
   <SmallCover :title="'Movies'"></SmallCover>
+
+  <div class="admin-bar">
+    <div class="admin-bar__search">
+      <input type="text" v-model.trim="search" placeholder="Search a movie name..." @input="searchFilter">
+    </div>
+    <div class="admin-bar__add">
+      <RouterLink class="button" to="#">
+        <img src="../assets/images/add.svg" alt="Add logo" />
+        <span>New movie</span>
+      </RouterLink>
+    </div>
+  </div>
+
   <div v-if="dataMovies" class="archive">
     <div class="items-list">
       <ItemCard v-for="item in dataMovies['hydra:member']" :data="item"></ItemCard>
     </div>
     <div class="pagination">
-      <div @click="onPrevPage" class="prev-arrow">
+      <div @click="onPrevPage" class="prev-arrow disable">
         <img src="../assets/images/pagination_arrow.svg" />
       </div>
       <div @click="onNextPage" class="next-arrow">
@@ -92,6 +118,53 @@ const onPrevPage = async () => {
 </template>
 
 <style lang="scss" scoped>
+.admin-bar {
+  margin-left: calc(4.347vw * 2);
+  width: calc(4.347vw * 19);
+  display: flex;
+  justify-content: space-between;
+  align-items: self-end;
+  margin-top: 32px;
+
+  &__search {
+    input {
+      width: calc(4.347vw * 5);
+      border: none;
+      background: none;
+      border-bottom: solid 1px #850606;
+      padding-bottom: 15px;
+      color: white;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &__add {
+    .button {
+      background-color: #850606;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 35px;
+      border-radius: 6px;
+      transition-duration: 0.4s;
+
+      &:hover {
+        background-color: #490303;
+      }
+
+      span {
+        color: white;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
 .loader {
   width: 100vw;
   height: 450px;
