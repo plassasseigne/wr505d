@@ -91,7 +91,7 @@ const searchFilter = async () => {
       <input type="text" v-model.trim="search" placeholder="Search a movie name..." @input="searchFilter">
     </div>
     <div class="admin-bar__add">
-      <RouterLink class="button" to="#">
+      <RouterLink class="button" to="/movie/add">
         <img src="../assets/images/add.svg" alt="Add logo" />
         <span>New movie</span>
       </RouterLink>
