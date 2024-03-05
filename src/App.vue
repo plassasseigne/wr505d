@@ -1,85 +1,137 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
+    <nav class="menu">
+      <div class="menu__container">
+        <div class="menu__home">
+          <RouterLink to="/">
+            <img src="./assets/images/logo_white.svg" alt="Scaryview logo" />
+          </RouterLink>
+        </div>
+        <div class="menu__content">
+          <div class="menu__links">
+            <RouterLink to="/movies">Movies</RouterLink>
+            <RouterLink to="/actors">Actors</RouterLink>
+            <RouterLink to="/categories">Categories</RouterLink>
+          </div>
+          <div class="menu__buttons">
+            <RouterLink to="#">
+              <div class="btn">
+                <span>Account</span>
+              </div>
+            </RouterLink>
+            <RouterLink to="#">
+              <div class="btn">
+                <span>Logout</span>
+              </div>
+            </RouterLink>
+          </div>
+        </div>
+      </div>
+    </nav>
   </header>
 
   <RouterView />
+
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__content">
+        <div class="footer__logo">
+          <img src="./assets/images/logo_white.svg" alt="Scaryview logo" />
+        </div>
+        <div class="footer__links">
+          <RouterLink to="/movies">Movies</RouterLink>
+          <RouterLink to="/actors">Actors</RouterLink>
+          <RouterLink to="/categories">Categories</RouterLink>
+          <RouterLink to="#">Account</RouterLink>
+        </div>
+        <div class="footer__subscribe">
+          <div class="title">
+            <p>Subscribe now</p>
+          </div>
+          <input placeholder="Your e-mail">
+        </div>
+      </div>
+      <div class="footer__copyrights">
+
+      </div>
+    </div>
+  </footer>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<style lang="scss">
+.footer {
+  background-color: #0E0909;
+
+  &__container {
+    padding: 85px calc(4.347vw * 2);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    img {
+      width: 238px;
+    }
+  }
+
+  &__links {
+    display: flex;
+    gap: 70px;
+
+    a {
+      color: #9C9C9C;
+      text-transform: uppercase;
+      font-family: 'Nunito SemiBold', sans-serif;
+      font-size: 14px;
+    }
+  }
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+.menu {
+  background-color: #1A0404;
+  position: absolute;
+  z-index: 99;
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
+  &__container {
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 60px;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  &__home {
+    img {
+      width: 185px;
+    }
   }
 
-  header .wrapper {
+  &__content {
     display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 50px;
   }
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
+  &__links {
+    display: flex;
+    gap: 50px;
 
-    padding: 1rem 0;
-    margin-top: 1rem;
+    a {
+      color: white;
+      font-family: 'Nunito SemiBold', sans-serif;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
   }
 }
+
+
 </style>
