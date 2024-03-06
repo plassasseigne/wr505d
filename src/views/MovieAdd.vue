@@ -71,7 +71,6 @@ const createMovie = async () => {
     console.log(error)
   }
 }
-
 </script>
 
 <template>
@@ -114,7 +113,7 @@ const createMovie = async () => {
           </div>
           <div v-if="dataCategories" class="form-row">
             <div class="form-element">
-              <label for="movie-title">Category *</label>
+              <label for="movie-category">Category *</label>
               <select name="movie-category" id="movie-category" v-model="movieCategory" required>
                 <option v-for="category in dataCategories['hydra:member']" :key="category.id" :value="category.id">{{ category.name }}</option>
               </select>
@@ -122,8 +121,8 @@ const createMovie = async () => {
           </div>
           <div v-if="dataActors" class="form-row">
             <div class="form-element">
-              <label for="movie-title">Actors</label>
-              <select name="movie-actors" id="movie-actor" required>
+              <label for="movie-actors">Actors</label>
+              <select name="movie-actors" id="movie-actors" required>
                 <option v-for="actor in dataActors['hydra:member']" :key="actor.id" :value="actor.id">{{ actor.first_name + ' ' + actor.last_name }}</option>
               </select>
             </div>
