@@ -1,5 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import router from "@/router"
+
+if (!localStorage.getItem('token')) {
+  router.push({ name: 'login' })
+}
 </script>
 
 <template>
