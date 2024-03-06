@@ -7,6 +7,7 @@ import ItemCard from '../components/ItemCard.vue'
 const id = useRoute().params.id
 
 const data = ref('')
+const token = localStorage.getItem('token')
 
 onMounted(async() => {
   getActor()
@@ -14,7 +15,11 @@ onMounted(async() => {
 
 const getActor = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors/' + id)
+    const response = await axios.get('http://127.0.0.1:8000/api/actors/' + id, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     data.value = response.data
   } catch (error) {

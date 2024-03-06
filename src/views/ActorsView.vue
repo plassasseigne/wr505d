@@ -5,6 +5,7 @@ import SmallCover from '../components/SmallCover.vue'
 import ItemCard from '../components/ItemCard.vue'
 
 const dataActors = ref('')
+const token = localStorage.getItem('token')
 
 onMounted(async() => {
   getActors()
@@ -12,7 +13,11 @@ onMounted(async() => {
 
 const getActors = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors')
+    const response = await axios.get('http://127.0.0.1:8000/api/actors', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataActors.value = response.data
   } catch (error) {

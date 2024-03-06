@@ -5,6 +5,7 @@ import SmallCover from '../components/SmallCover.vue'
 import ItemCard from '../components/ItemCard.vue'
 
 const dataCategories = ref('')
+const token = localStorage.getItem('token')
 
 onMounted(async() => {
   getCategories()
@@ -12,7 +13,11 @@ onMounted(async() => {
 
 const getCategories = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories')
+    const response = await axios.get('http://127.0.0.1:8000/api/categories', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataCategories.value = response.data
   } catch (error) {
