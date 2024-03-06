@@ -13,6 +13,7 @@ const movieDuration = ref(0)
 const movieCategory = ref('')
 const movieBoxOffice = ref(0)
 const movieMetascore = ref(0)
+const movieActors = ref([])
 
 onMounted(async() => {
   getCategories()
@@ -35,7 +36,7 @@ const getCategories = async () => {
 
 const getActors = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors/', {
+    const response = await axios.get('http://127.0.0.1:8000/api/actors?pagination=false', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -55,7 +56,8 @@ const createMovie = async () => {
     "category": '/api/categories/' + movieCategory.value,
     "metascore": movieMetascore.value,
     "releaseDate": `${movieReleaseDate.value}`,
-    "boxOffice": `${movieBoxOffice.value}`
+    "boxOffice": `${movieBoxOffice.value}`,
+    "actor" : movieActors.value.map((actor) => `/api/actors/${actor}`)
   }
 
   try {
@@ -122,7 +124,7 @@ const createMovie = async () => {
           <div v-if="dataActors" class="form-row">
             <div class="form-element">
               <label for="movie-actors">Actors</label>
-              <select name="movie-actors" id="movie-actors" required>
+              <select name="movie-actors" id="movie-actors" v-model="movieActors" multiple required>
                 <option v-for="actor in dataActors['hydra:member']" :key="actor.id" :value="actor.id">{{ actor.first_name + ' ' + actor.last_name }}</option>
               </select>
             </div>
