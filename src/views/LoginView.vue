@@ -21,13 +21,12 @@ const login = async () => {
     })
 
     data.value = response.data
-    localStorage.setItem('token', data.token)
+    localStorage.setItem('token', data.value.token)
     location.href = '/'
   } catch (error) {
    console.log(error) 
   }
 }
-
 
 </script>
 
