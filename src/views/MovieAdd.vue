@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const dataCategories = ref('')
 const dataActors = ref('')
+const token = localStorage.getItem('token')
 
 const movieTitle = ref('')
 const movieDescription = ref('')
@@ -20,7 +21,11 @@ onMounted(async() => {
 
 const getCategories = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories?pagination=false')
+    const response = await axios.get('http://127.0.0.1:8000/api/categories?pagination=false', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataCategories.value = response.data
   } catch (error) {
@@ -30,7 +35,11 @@ const getCategories = async () => {
 
 const getActors = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors/')
+    const response = await axios.get('http://127.0.0.1:8000/api/actors/', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataActors.value = response.data
   } catch (error) {
@@ -49,16 +58,15 @@ const createMovie = async () => {
     "boxOffice": `${movieBoxOffice.value}`
   }
 
-  console.log(data)
-
   try {
     const request = await axios.post('http://127.0.0.1:8000/api/movies', data, {
       headers: {
-        'Content-Type': 'application/ld+json; charset=utf-8'
+        'Content-Type': 'application/ld+json; charset=utf-8',
+        'Authorization': 'Bearer ' + token
       }
     })
 
-    console.log(request)
+    location.href = '/movies'
   } catch (error) {
     console.log(error)
   }
@@ -106,7 +114,6 @@ const createMovie = async () => {
           </div>
           <div v-if="dataCategories" class="form-row">
             <div class="form-element">
-              {{ console.log(movieCategory) }}
               <label for="movie-title">Category *</label>
               <select name="movie-category" id="movie-category" v-model="movieCategory" required>
                 <option v-for="category in dataCategories['hydra:member']" :key="category.id" :value="category.id">{{ category.name }}</option>

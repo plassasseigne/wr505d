@@ -7,6 +7,7 @@ import Button from '../components/Button.vue'
 const id = useRoute().params.id
 
 const data = ref('')
+const token = localStorage.getItem('token')
 
 onMounted(async() => {
   getMovie()
@@ -14,7 +15,11 @@ onMounted(async() => {
 
 const getMovie = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies/' + id)
+    const response = await axios.get('http://127.0.0.1:8000/api/movies/' + id, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     data.value = response.data
   } catch (error) {

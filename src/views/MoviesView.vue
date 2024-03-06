@@ -7,6 +7,7 @@ import ItemCard from '../components/ItemCard.vue'
 const dataMovies = ref('')
 const nextPage = ref('')
 const prevPage = ref('')
+const token = localStorage.getItem('token')
 
 let search = ref('')
 let allMovies = ref('')
@@ -17,7 +18,11 @@ onMounted(async() => {
 
 const getMovies = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies')
+    const response = await axios.get('http://127.0.0.1:8000/api/movies', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataMovies.value = response.data
     allMovies.value = response.data
@@ -34,7 +39,11 @@ const getMovies = async () => {
 
 const onNextPage = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000' + nextPage.value)
+    const response = await axios.get('http://127.0.0.1:8000' + nextPage.value, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataMovies.value = response.data
     prevPage.value = response.data['hydra:view']['hydra:previous']
@@ -54,7 +63,11 @@ const onNextPage = async () => {
 
 const onPrevPage = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000' + prevPage.value)
+    const response = await axios.get('http://127.0.0.1:8000' + prevPage.value, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataMovies.value = response.data
     nextPage.value = response.data['hydra:view']['hydra:next']
@@ -74,7 +87,11 @@ const onPrevPage = async () => {
 
 const searchFilter = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies?title=' + search.value)
+    const response = await axios.get('http://127.0.0.1:8000/api/movies?title=' + search.value, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataMovies.value = response.data
   } catch (error) {

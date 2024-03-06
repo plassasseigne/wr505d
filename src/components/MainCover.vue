@@ -1,8 +1,6 @@
 <script setup>
-import { useRoute, RouterLink } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
-import Button from '../components/Button.vue'
 
 const data = ref('')
 const next = ref('')
@@ -13,7 +11,15 @@ onMounted(async() => {
 
 const getMovie = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies?page=1')
+    const token = localStorage.getItem('token')
+
+    const response = await axios.get('http://127.0.0.1:8000/api/movies?page=1', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+
+    console.log(response)
 
     data.value = response.data['hydra:member'][0]
     next.value = response.data['hydra:member'][1]

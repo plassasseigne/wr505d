@@ -7,6 +7,7 @@ import LatestItems from '../components/LatestItems.vue'
 const dataMovies = ref('')
 const dataActors = ref('')
 const dataCategories = ref('')
+const token = localStorage.getItem('token')
 
 onMounted(async() => {
   getMovies()
@@ -16,7 +17,11 @@ onMounted(async() => {
 
 const getMovies = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies')
+    const response = await axios.get('http://127.0.0.1:8000/api/movies', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataMovies.value = response.data
   } catch (error) {
@@ -26,7 +31,11 @@ const getMovies = async () => {
 
 const getActors = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors')
+    const response = await axios.get('http://127.0.0.1:8000/api/actors', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataActors.value = response.data
   } catch (error) {
@@ -36,7 +45,11 @@ const getActors = async () => {
 
 const getCategories = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories')
+    const response = await axios.get('http://127.0.0.1:8000/api/categories', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataCategories.value = response.data
   } catch (error) {
