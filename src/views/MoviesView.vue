@@ -21,6 +21,9 @@ const editMovieBoxOffice = ref(0)
 const editMovieActors = ref([])
 const editMovieCategory = ref('')
 
+const deleteMovieData = ref('')
+const deleteMovieTitle = ref('')
+
 let search = ref('')
 let allMovies = ref('')
 
@@ -202,6 +205,34 @@ const editMovie = async () => {
   }
 }
 
+const displayDelete = async (item) => {
+  deleteMovieData.value = item.id
+  deleteMovieTitle.value = item.title
+
+  document.querySelector('.items-delete').style.display = 'block'
+}
+
+const hideDelete = async () => {
+  deleteMovieData.value = ''
+  deleteMovieTitle.value = ''
+
+  document.querySelector('.items-delete').style.display = 'none'
+}
+
+const deleteMovie = async () => {
+  try {
+    const request = await axios.delete('http://127.0.0.1:8000/api/movies/' + deleteMovieData.value, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+
+    getMovies()
+    hideDelete()
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
 
 <template>
@@ -222,11 +253,33 @@ const editMovie = async () => {
   <div v-if="dataMovies" class="archive">
     <div class="archive__content">
 
+      <div class="items-delete">
+        <div class="items-delete__wrapper">
+          <div class="items-delete__content">
+            <h3 class="items-delete__title">Warning !</h3>
+            <p>You are about to delete the movie <b>{{ deleteMovieTitle ? deleteMovieTitle : '' }}</b>, this action is irreversible. Please confirm.</p>
+            <div class="items-delete__buttons">
+              <a @click="deleteMovie()" class="button">
+                <span class="button__title">Confirm</span>
+              </a>
+              <a @click="hideDelete()" class="button">
+                <span class="button__title">Cancel</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="items-list">
         <div v-for="item in dataMovies['hydra:member']" :key="item.id" class="items-list__item">
-          <a @click="displayEditor(item.id)" class="items-list__edit">
-            <img src="../assets/images/edit.svg" />
-          </a>
+          <div class="items-list__manage">
+            <a @click="displayEditor(item.id)" class="items-list__action">
+              <img src="../assets/images/edit.svg" />
+            </a>
+            <a @click="displayDelete(item)" class="items-list__action">
+              <img src="../assets/images/delete.svg" />
+            </a>
+          </div>
           <ItemCard :data="item"></ItemCard>
         </div>
       </div>
@@ -317,10 +370,69 @@ const editMovie = async () => {
   }
 }
 
+.items-delete {
+  position: fixed;
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  display: none;
+
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content {
+    background-color: #850606;
+    padding: 50px 4.347vw;
+    border-radius: 30px;
+
+    p {
+      margin-bottom: 32px;
+    }
+  }
+
+  &__title {
+    font-size: 36px;
+    text-align: center;
+    font-family: 'Penumbra', sans-serif;
+    margin-bottom: 32px;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+
+    .button {
+      background-color: #490303;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 30px;
+      border-radius: 6px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+
+      &__title {
+        color: white;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
 .items-edit {
   transform: translateX(60vw);
   transition-duration: 0.4s;
-  // width: calc(4.347vw * 11);
   width: 4.347vw;
   margin-left: 4.347vw;
   margin-top: 64px;
@@ -412,7 +524,6 @@ const editMovie = async () => {
   justify-content: space-between;
   margin-left: calc(4.347vw * 2);
   width: calc(4.347vw * 19);
-  // width: calc(4.347vw * 9);
   margin-top: 64px;
   margin-bottom: 30px;
   transition-duration: 0.4s;
@@ -422,9 +533,16 @@ const editMovie = async () => {
     position: relative;
   }
 
-  &__edit {
+  &__manage {
     position: absolute;
     z-index: 2;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+  }
+
+  &__action {
     background-color: #850606;
     width: 40px;
     height: 40px;
@@ -432,8 +550,6 @@ const editMovie = async () => {
     justify-content: center;
     align-items: center;
     border-radius: 100%;
-    top: 10px;
-    right: 10px;
     transition-duration: 0.4s;
     cursor: pointer;
 
