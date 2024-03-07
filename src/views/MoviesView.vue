@@ -33,6 +33,8 @@ onMounted(async() => {
   getActors()
 })
 
+// Get items
+
 const getMovies = async () => {
   try {
     const response = await axios.get('http://127.0.0.1:8000/api/movies', {
@@ -82,6 +84,8 @@ const getActors = async () => {
   }
 }
 
+// Pagination
+
 const onNextPage = async () => {
   try {
     const response = await axios.get('http://127.0.0.1:8000' + nextPage.value, {
@@ -130,6 +134,8 @@ const onPrevPage = async () => {
   }
 }
 
+// Search
+
 const searchFilter = async () => {
   try {
     const response = await axios.get('http://127.0.0.1:8000/api/movies?title=' + search.value, {
@@ -144,6 +150,8 @@ const searchFilter = async () => {
   }
 }
 
+// Edit movie
+
 const displayEditor = async (id) => {
   try {
     const response = await axios.get('http://127.0.0.1:8000/api/movies/' + id, {
@@ -151,8 +159,6 @@ const displayEditor = async (id) => {
         'Authorization': 'Bearer ' + token
       }
     })
-
-    console.log(response.data)
 
     editMovieData.value = response.data
     editMovieTitle.value = editMovieData.value.title
@@ -204,6 +210,8 @@ const editMovie = async () => {
     console.log(error)
   }
 }
+
+// Delete movie
 
 const displayDelete = async (item) => {
   deleteMovieData.value = item.id
@@ -326,7 +334,7 @@ const deleteMovie = async () => {
             <div v-if="dataCategories" class="form-row">
               <div class="form-element">
                 <label for="movie-category">Category *</label>
-                <select name="movie-category" id="movie-category" required>
+                <select name="movie-category" id="movie-category" v-model="editMovieCategory.id" required>
                   <option v-for="category in dataCategories['hydra:member']" :selected="category.name === editMovieCategory.name" :key="category.id" :value="category.id">{{ category.name }}</option>
                 </select>
               </div>
