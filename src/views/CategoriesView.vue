@@ -158,8 +158,7 @@ const editCategory = async () => {
   }
 }
 
-
-// Delete movie
+// Delete category
 
 const displayDelete = async (item) => {
   deleteCategoryData.value = item.id
