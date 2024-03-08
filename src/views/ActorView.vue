@@ -1,12 +1,15 @@
 <script setup>
-import { useRoute, RouterLink } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 import ItemCard from '../components/ItemCard.vue'
 
 const id = useRoute().params.id
 
 const data = ref('')
+const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 onMounted(async() => {
   getActor()
@@ -14,11 +17,19 @@ onMounted(async() => {
 
 const getActor = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors/' + id)
+    const response = await axios.get(API_URL + '/api/actors/' + id, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     data.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>
@@ -75,7 +86,7 @@ const getActor = async () => {
       <div class="actor-infos__filmography">
         <h2 class="actor-infos__title">Filmography</h2>
         <div class="actor-infos__movies-list">
-          <ItemCard v-for="movie in data.movies" :data="movie"></ItemCard>
+          <ItemCard v-for="movie in data.movies" :key="movie.id" :data="movie"></ItemCard>
         </div>
       </div>
     </section>

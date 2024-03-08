@@ -1,27 +1,50 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue';
 import router from "@/router";
 import axios from 'axios'
+
+const dataUser = ref('')
 
 const token = localStorage.getItem('token')
 const API_URL = import.meta.env.VITE_API_URL
 
-const categoryName = ref('')
+onMounted(async() => {
+  getUser()
+})
 
-const createCategory = async () => {
-  const data = {
-    "name": `${categoryName.value}`
-  }
-
+const getUser = async () => {
   try {
-    const request = await axios.post(API_URL + '/api/categories', data, {
+    const response = await axios.get(API_URL + '/api/me', {
       headers: {
-        'Content-Type': 'application/ld+json; charset=utf-8',
         'Authorization': 'Bearer ' + token
       }
     })
 
-    router.push('/categories')
+    dataUser.value = response.data
+  } catch (error) {
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
+  }
+}
+
+const editUser = async () => {
+  const data = {
+    "email": `${dataUser.value.email}`,
+    "username": `${dataUser.value.username}`
+  }
+
+  try {
+    const request = await axios.patch(API_URL + '/api/me/update', data, {
+      headers: {
+        'Content-Type': 'application/merge-patch+json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+
+    getUser()
   } catch (error) {
     if (error.response.data.code === 401) {
       return router.push('/login')
@@ -33,29 +56,35 @@ const createCategory = async () => {
 </script>
 
 <template>
-  <section class="category-add">
-    <div class="category-add__wrapper">
-      <div class="category-add__form-part">
-        <h1 class="category-add__title">Add a new category</h1>
-        <form @submit.prevent="createCategory" class="form">
+  <section class="account">
+    <div class="account__wrapper">
+      <div class="account__form-part">
+        <h1 class="account__title">My account</h1>
+        <form @submit.prevent="editUser" class="form">
           <div class="form-row">
             <div class="form-element">
-              <label for="category-title">Name *</label>
-              <input placeholder="Lorem Ipsum" type="text" id="category-title" v-model="categoryName" required>
+              <label for="user-username">Username</label>
+              <input type="text" id="user-username" v-model="dataUser.username">
             </div>
           </div>
           <div class="form-row">
-            <input type="submit" value="Create">
+            <div class="form-element">
+              <label for="user-email">Email</label>
+              <input type="email" id="user-email" v-model="dataUser.email">
+            </div>
+          </div>
+          <div class="form-row">
+            <input type="submit" value="Save">
           </div>
         </form>
       </div>
-      <div class="category-add__poster-part">
-        <div class="category-add__poster-part__bg">
+      <div class="account__picture-part">
+        <div class="account__picture-part__bg">
           <img src="../assets/images/background.jpg" alt="Dark forest" />
         </div>
-        <div class="category-add__poster-part__content">
-          <div class="category-add__poster-part__poster">
-            <img src="../assets/images/category_poster.jpg" alt="Category poster" />
+        <div class="account__picture-part__content">
+          <div class="account__picture-part__picture">
+            <img src="../assets/images/actor_poster.jpeg" alt="Profile picture" />
           </div>
         </div>
       </div>
@@ -64,12 +93,12 @@ const createCategory = async () => {
 </template>
 
 <style lang="scss" scoped>
-.category-add {
+.account {
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(120vh + 80px);
+  height: calc(80vh + 80px);
   padding-top: 80px;
 
   &__wrapper {
@@ -86,7 +115,7 @@ const createCategory = async () => {
     position: relative;
   }
 
-  &__poster-part {
+  &__picture-part {
     width: calc(4.347vw * 8);
     overflow: hidden;
     position: relative;
@@ -98,7 +127,7 @@ const createCategory = async () => {
       position: absolute;
     }
 
-    &__poster {
+    &__picture {
       position: relative;
 
       img {

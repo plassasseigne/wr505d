@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue';
+import router from "@/router";
 import axios from 'axios'
+
+const API_URL = import.meta.env.VITE_API_URL
 
 const data = ref('')
 let email = ref('')
@@ -13,7 +16,7 @@ const login = async () => {
   }
 
   try {
-    const response = await axios.post('http://127.0.0.1:8000/api/login_check', data, {
+    const response = await axios.post(API_URL + '/api/login_check', data, {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -21,13 +24,12 @@ const login = async () => {
     })
 
     data.value = response.data
-    localStorage.setItem('token', data.token)
-    location.href = '/'
+    localStorage.setItem('token', data.value.token)
+    router.push('/')
   } catch (error) {
    console.log(error) 
   }
 }
-
 
 </script>
 

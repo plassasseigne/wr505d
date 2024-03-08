@@ -1,12 +1,15 @@
 <script setup>
 import { useRoute, RouterLink } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 import Button from '../components/Button.vue'
 
 const id = useRoute().params.id
 
 const data = ref('')
+const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 onMounted(async() => {
   getMovie()
@@ -14,11 +17,19 @@ onMounted(async() => {
 
 const getMovie = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies/' + id)
+    const response = await axios.get(API_URL + '/api/movies/' + id, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     data.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>
@@ -90,7 +101,7 @@ const getMovie = async () => {
         <div class="movie-infos__cast">
           <h2 class="movie-infos__title">Cast</h2>
           <div class="movie-infos__actors-list">
-            <RouterLink to="#" v-for="actor in data.actor" class="movie-infos__actor">
+            <RouterLink :to="'/actor/' + actor.id" v-for="actor in data.actor" :key="actor.id" class="movie-infos__actor">
               <img src="../assets/images/actor_poster.jpeg" :alt="actor.last_name + ' poster'" />
               <span class="name">{{ actor.first_name + ' ' + actor.last_name }}</span>
             </RouterLink>

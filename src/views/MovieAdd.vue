@@ -1,9 +1,12 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 
 const dataCategories = ref('')
 const dataActors = ref('')
+const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 const movieTitle = ref('')
 const movieDescription = ref('')
@@ -12,6 +15,7 @@ const movieDuration = ref(0)
 const movieCategory = ref('')
 const movieBoxOffice = ref(0)
 const movieMetascore = ref(0)
+const movieActors = ref([])
 
 onMounted(async() => {
   getCategories()
@@ -20,21 +24,37 @@ onMounted(async() => {
 
 const getCategories = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories?pagination=false')
+    const response = await axios.get(API_URL + '/api/categories?pagination=false', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataCategories.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
 const getActors = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors/')
+    const response = await axios.get(API_URL + '/api/actors?pagination=false', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataActors.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -46,24 +66,27 @@ const createMovie = async () => {
     "category": '/api/categories/' + movieCategory.value,
     "metascore": movieMetascore.value,
     "releaseDate": `${movieReleaseDate.value}`,
-    "boxOffice": `${movieBoxOffice.value}`
+    "boxOffice": `${movieBoxOffice.value}`,
+    "actor" : movieActors.value.map((actor) => `/api/actors/${actor}`)
   }
 
-  console.log(data)
-
   try {
-    const request = await axios.post('http://127.0.0.1:8000/api/movies', data, {
+    const request = await axios.post(API_URL + '/api/movies', data, {
       headers: {
-        'Content-Type': 'application/ld+json; charset=utf-8'
+        'Content-Type': 'application/ld+json; charset=utf-8',
+        'Authorization': 'Bearer ' + token
       }
     })
 
-    console.log(request)
+    router.push('/movies')
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
-
 </script>
 
 <template>
@@ -106,8 +129,7 @@ const createMovie = async () => {
           </div>
           <div v-if="dataCategories" class="form-row">
             <div class="form-element">
-              {{ console.log(movieCategory) }}
-              <label for="movie-title">Category *</label>
+              <label for="movie-category">Category *</label>
               <select name="movie-category" id="movie-category" v-model="movieCategory" required>
                 <option v-for="category in dataCategories['hydra:member']" :key="category.id" :value="category.id">{{ category.name }}</option>
               </select>
@@ -115,8 +137,8 @@ const createMovie = async () => {
           </div>
           <div v-if="dataActors" class="form-row">
             <div class="form-element">
-              <label for="movie-title">Actors</label>
-              <select name="movie-actors" id="movie-actor" required>
+              <label for="movie-actors">Actors</label>
+              <select name="movie-actors" id="movie-actors" v-model="movieActors" multiple required>
                 <option v-for="actor in dataActors['hydra:member']" :key="actor.id" :value="actor.id">{{ actor.first_name + ' ' + actor.last_name }}</option>
               </select>
             </div>

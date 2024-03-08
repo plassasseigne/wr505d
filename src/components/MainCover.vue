@@ -1,11 +1,11 @@
 <script setup>
-import { useRoute, RouterLink } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
-import Button from '../components/Button.vue'
 
 const data = ref('')
 const next = ref('')
+const API_URL = import.meta.env.VITE_API_URL
 
 onMounted(async() => {
   getMovie()
@@ -13,12 +13,22 @@ onMounted(async() => {
 
 const getMovie = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies?page=1')
+    const token = localStorage.getItem('token')
+
+    const response = await axios.get(API_URL + '/api/movies?page=1', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     data.value = response.data['hydra:member'][0]
     next.value = response.data['hydra:member'][1]
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

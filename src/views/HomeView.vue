@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 import MainCover from '../components/MainCover.vue'
 import LatestItems from '../components/LatestItems.vue'
@@ -7,6 +8,8 @@ import LatestItems from '../components/LatestItems.vue'
 const dataMovies = ref('')
 const dataActors = ref('')
 const dataCategories = ref('')
+const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 onMounted(async() => {
   getMovies()
@@ -16,31 +19,55 @@ onMounted(async() => {
 
 const getMovies = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies')
+    const response = await axios.get(API_URL + '/api/movies', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataMovies.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
 const getActors = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors')
+    const response = await axios.get(API_URL + '/api/actors', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataActors.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
 const getCategories = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories')
+    const response = await axios.get(API_URL + '/api/categories', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
 
     dataCategories.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 

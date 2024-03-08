@@ -21,6 +21,7 @@ defineProps(['img', 'title', 'link'])
   padding: 10px 30px;
   border-radius: 6px;
   transition-duration: 0.4s;
+  justify-content: center;
 
   &:hover {
     background-color: #490303;

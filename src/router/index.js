@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import AccountView from '../views/AccountView.vue'
 
 import MoviesView from '../views/MoviesView.vue'
 import ActorsView from '../views/ActorsView.vue'
@@ -25,6 +26,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: AccountView
     },
     // Item archive
     {
