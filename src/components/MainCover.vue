@@ -19,12 +19,14 @@ const getMovie = async () => {
       }
     })
 
-    console.log(response)
-
     data.value = response.data['hydra:member'][0]
     next.value = response.data['hydra:member'][1]
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

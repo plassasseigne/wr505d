@@ -11,7 +11,7 @@ defineProps(['data', 'title', 'route'])
     <RouterLink class="latest-items__route" :to="route">See more</RouterLink>
   </div>
   <div class="latest-items__list">
-    <ItemCard v-for="item in data.slice(0, 4)" :data="item"></ItemCard>
+    <ItemCard v-for="item in data.slice(0, 4)" :key="item.id" :data="item"></ItemCard>
   </div>
 </div>
 </template>

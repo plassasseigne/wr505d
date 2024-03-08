@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import router from "@/router";
 import axios from 'axios'
 
 const data = ref('')
@@ -22,7 +23,7 @@ const login = async () => {
 
     data.value = response.data
     localStorage.setItem('token', data.value.token)
-    location.href = '/'
+    router.push('/')
   } catch (error) {
    console.log(error) 
   }

@@ -383,7 +383,7 @@ const deleteMovie = async () => {
               <div class="form-element">
                 <label for="movie-actors">Actors</label>
                 <select name="movie-actors" id="movie-actors" v-model="editMovieActors" multiple required>
-                  <option v-for="actor in dataActors['hydra:member']" :value="actor.id">{{ actor.first_name + ' ' + actor.last_name }}</option>
+                  <option v-for="actor in dataActors['hydra:member']" :key="actor.id" :value="actor.id">{{ actor.first_name + ' ' + actor.last_name }}</option>
                 </select>
               </div>
             </div>

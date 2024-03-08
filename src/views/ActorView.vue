@@ -85,7 +85,7 @@ const getActor = async () => {
       <div class="actor-infos__filmography">
         <h2 class="actor-infos__title">Filmography</h2>
         <div class="actor-infos__movies-list">
-          <ItemCard v-for="movie in data.movies" :data="movie"></ItemCard>
+          <ItemCard v-for="movie in data.movies" :key="movie.id" :data="movie"></ItemCard>
         </div>
       </div>
     </section>
