@@ -15,6 +15,7 @@ const editCategoryName = ref('')
 
 const deleteCategoryData = ref('')
 const deleteCategoryName = ref('')
+const deleteCategoryAuth = ref()
 
 let search = ref('')
 let allCategories = ref('')
@@ -185,6 +186,12 @@ const displayDelete = async (item) => {
   deleteCategoryData.value = item.id
   deleteCategoryName.value = item.name
 
+  if (item.movies.length === 0) {
+    deleteCategoryAuth.value = true
+  } else {
+    deleteCategoryAuth.value = false
+  }
+
   document.querySelector('.items-delete').style.display = 'block'
 }
 
@@ -235,7 +242,7 @@ const deleteCategory = async () => {
 
       <div class="items-delete">
         <div class="items-delete__wrapper">
-          <div class="items-delete__content">
+          <div v-if="deleteCategoryAuth === true" class="items-delete__content">
             <h3 class="items-delete__title">Warning !</h3>
             <p>You are about to delete the category <b>{{ deleteCategoryName }}</b>, this action is irreversible. Please confirm.</p>
             <div class="items-delete__buttons">
@@ -244,6 +251,15 @@ const deleteCategory = async () => {
               </a>
               <a @click="hideDelete()" class="button">
                 <span class="button__title">Cancel</span>
+              </a>
+            </div>
+          </div>
+          <div v-else class="items-delete__content">
+            <h3 class="items-delete__title">Warning !</h3>
+            <p>The category <b>{{ deleteCategoryName }}</b> contains movies, so you can't delete it.</p>
+            <div class="items-delete__buttons">
+              <a @click="hideDelete()" class="button">
+                <span class="button__title">Back</span>
               </a>
             </div>
           </div>
