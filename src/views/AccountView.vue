@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import router from "@/router";
 import axios from 'axios'
 
 const dataUser = ref('')
@@ -20,7 +21,11 @@ const getUser = async () => {
 
     dataUser.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -40,7 +45,11 @@ const editUser = async () => {
 
     getUser()
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

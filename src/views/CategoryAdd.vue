@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 
 const token = localStorage.getItem('token')
@@ -21,7 +22,11 @@ const createCategory = async () => {
 
     location.href = '/categories'
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

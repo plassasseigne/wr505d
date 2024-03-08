@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import router from "@/router";
 import axios from 'axios'
 import SmallCover from '../components/SmallCover.vue'
 import ItemCard from '../components/ItemCard.vue'
@@ -27,6 +28,10 @@ const deleteMovieTitle = ref('')
 let search = ref('')
 let allMovies = ref('')
 
+if (!token) {
+  router.push('/login')
+}
+
 onMounted(async() => {
   getMovies()
   getCategories()
@@ -46,13 +51,16 @@ const getMovies = async () => {
     dataMovies.value = response.data
     allMovies.value = response.data
     nextPage.value = response.data['hydra:view']['hydra:next']
-
+    
     if (response.data['hydra:view']['hydra:previous']) {
       prevPage.value = response.data['hydra:view']['hydra:previous']
     }
-
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -66,7 +74,11 @@ const getCategories = async () => {
 
     dataCategories.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -80,7 +92,11 @@ const getActors = async () => {
 
     dataActors.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -106,7 +122,11 @@ const onNextPage = async () => {
     window.scrollTo(0, 0)
     document.querySelector('.prev-arrow').classList.remove('disable')
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -130,7 +150,11 @@ const onPrevPage = async () => {
     window.scrollTo(0, 0)
     document.querySelector('.next-arrow').classList.remove('disable')
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -146,7 +170,11 @@ const searchFilter = async () => {
 
     dataMovies.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -174,7 +202,11 @@ const displayEditor = async (id) => {
     document.querySelector('.items-edit').style.width = 'calc(4.347vw * 11)'
     document.querySelector('.items-list').style.width = 'calc(4.347vw * 9)'
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -207,7 +239,11 @@ const editMovie = async () => {
     getMovies()
     hideEditor()
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -238,7 +274,11 @@ const deleteMovie = async () => {
     getMovies()
     hideDelete()
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

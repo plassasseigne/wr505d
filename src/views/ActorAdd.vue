@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 
 const dataNationalities = ref('')
@@ -25,7 +26,11 @@ const getNationalities = async () => {
 
     dataNationalities.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -49,7 +54,11 @@ const createActor = async () => {
     console.log(request)
     location.href = '/actors'
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

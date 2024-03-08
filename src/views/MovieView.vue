@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute, RouterLink } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 import Button from '../components/Button.vue'
 
@@ -23,7 +24,11 @@ const getMovie = async () => {
 
     data.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

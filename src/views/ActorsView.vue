@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import router from "@/router";
 import axios from 'axios'
 import SmallCover from '../components/SmallCover.vue'
 import ItemCard from '../components/ItemCard.vue'
@@ -48,7 +49,11 @@ const getActors = async () => {
     }
 
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -62,7 +67,11 @@ const getNationalities = async () => {
 
     dataNationalities.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -88,7 +97,11 @@ const onNextPage = async () => {
     window.scrollTo(0, 0)
     document.querySelector('.prev-arrow').classList.remove('disable')
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -112,7 +125,11 @@ const onPrevPage = async () => {
     window.scrollTo(0, 0)
     document.querySelector('.next-arrow').classList.remove('disable')
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -128,7 +145,11 @@ const searchFilter = async () => {
 
     dataActors.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -153,7 +174,11 @@ const displayEditor = async (id) => {
     document.querySelector('.items-edit').style.width = 'calc(4.347vw * 11)'
     document.querySelector('.items-list').style.width = 'calc(4.347vw * 9)'
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -183,7 +208,11 @@ const editActor = async () => {
     getActors()
     hideEditor()
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -216,7 +245,11 @@ const deleteActor = async () => {
     getActors()
     hideDelete()
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

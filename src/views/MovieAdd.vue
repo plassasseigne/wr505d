@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 
 const dataCategories = ref('')
@@ -30,7 +31,11 @@ const getCategories = async () => {
 
     dataCategories.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -44,7 +49,11 @@ const getActors = async () => {
 
     dataActors.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -70,7 +79,11 @@ const createMovie = async () => {
 
     location.href = '/movies'
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>

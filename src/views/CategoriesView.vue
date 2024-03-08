@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import router from "@/router";
 import axios from 'axios'
 import SmallCover from '../components/SmallCover.vue'
 import ItemCard from '../components/ItemCard.vue'
@@ -41,7 +42,11 @@ const getCategories = async () => {
     }
 
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -67,7 +72,11 @@ const onNextPage = async () => {
     window.scrollTo(0, 0)
     document.querySelector('.prev-arrow').classList.remove('disable')
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -91,7 +100,11 @@ const onPrevPage = async () => {
     window.scrollTo(0, 0)
     document.querySelector('.next-arrow').classList.remove('disable')
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -107,7 +120,11 @@ const searchFilter = async () => {
 
     dataCategories.value = response.data
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -154,7 +171,11 @@ const editCategory = async () => {
     getCategories()
     hideEditor()
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 
@@ -185,7 +206,11 @@ const deleteCategory = async () => {
     getCategories()
     hideDelete()
   } catch (error) {
-    console.log(error)
+    if (error.response.data.code === 401) {
+      return router.push('/login')
+    } else {
+      console.log(error)
+    }
   }
 }
 </script>
