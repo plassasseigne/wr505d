@@ -51,8 +51,7 @@ const createActor = async () => {
       }
     })
 
-    console.log(request)
-    location.href = '/actors'
+    router.push('/actors')
   } catch (error) {
     if (error.response.data.code === 401) {
       return router.push('/login')

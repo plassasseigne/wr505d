@@ -20,7 +20,7 @@ const createCategory = async () => {
       }
     })
 
-    location.href = '/categories'
+    router.push('/categories')
   } catch (error) {
     if (error.response.data.code === 401) {
       return router.push('/login')

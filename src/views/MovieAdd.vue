@@ -77,7 +77,7 @@ const createMovie = async () => {
       }
     })
 
-    location.href = '/movies'
+    router.push('/movies')
   } catch (error) {
     if (error.response.data.code === 401) {
       return router.push('/login')

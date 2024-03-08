@@ -100,7 +100,7 @@ const getMovie = async () => {
         <div class="movie-infos__cast">
           <h2 class="movie-infos__title">Cast</h2>
           <div class="movie-infos__actors-list">
-            <RouterLink :to="'/actor/' + actor.id" v-for="actor in data.actor" class="movie-infos__actor">
+            <RouterLink :to="'/actor/' + actor.id" v-for="actor in data.actor" :key="actor.id" class="movie-infos__actor">
               <img src="../assets/images/actor_poster.jpeg" :alt="actor.last_name + ' poster'" />
               <span class="name">{{ actor.first_name + ' ' + actor.last_name }}</span>
             </RouterLink>
