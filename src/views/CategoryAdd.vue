@@ -4,6 +4,7 @@ import router from "@/router";
 import axios from 'axios'
 
 const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 const categoryName = ref('')
 
@@ -13,7 +14,7 @@ const createCategory = async () => {
   }
 
   try {
-    const request = await axios.post('http://127.0.0.1:8000/api/categories', data, {
+    const request = await axios.post(API_URL + '/api/categories', data, {
       headers: {
         'Content-Type': 'application/ld+json; charset=utf-8',
         'Authorization': 'Bearer ' + token

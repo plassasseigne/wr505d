@@ -5,6 +5,7 @@ import axios from 'axios'
 
 const dataNationalities = ref('')
 const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 const actorFirstName = ref('')
 const actorLastName = ref('')
@@ -18,7 +19,7 @@ onMounted(async() => {
 
 const getNationalities = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/nationalities?pagination=false', {
+    const response = await axios.get(API_URL + '/api/nationalities?pagination=false', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -44,7 +45,7 @@ const createActor = async () => {
   }
 
   try {
-    const request = await axios.post('http://127.0.0.1:8000/api/actors', data, {
+    const request = await axios.post(API_URL + '/api/actors', data, {
       headers: {
         'Content-Type': 'application/ld+json; charset=utf-8',
         'Authorization': 'Bearer ' + token

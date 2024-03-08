@@ -6,6 +6,7 @@ import axios from 'axios'
 const dataCategories = ref('')
 const dataActors = ref('')
 const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 const movieTitle = ref('')
 const movieDescription = ref('')
@@ -23,7 +24,7 @@ onMounted(async() => {
 
 const getCategories = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories?pagination=false', {
+    const response = await axios.get(API_URL + '/api/categories?pagination=false', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -41,7 +42,7 @@ const getCategories = async () => {
 
 const getActors = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors?pagination=false', {
+    const response = await axios.get(API_URL + '/api/actors?pagination=false', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -70,7 +71,7 @@ const createMovie = async () => {
   }
 
   try {
-    const request = await axios.post('http://127.0.0.1:8000/api/movies', data, {
+    const request = await axios.post(API_URL + '/api/movies', data, {
       headers: {
         'Content-Type': 'application/ld+json; charset=utf-8',
         'Authorization': 'Bearer ' + token

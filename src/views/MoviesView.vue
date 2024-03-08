@@ -11,6 +11,7 @@ const dataActors = ref('')
 const nextPage = ref('')
 const prevPage = ref('')
 const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 const editMovieData = ref('')
 const editMovieTitle = ref('')
@@ -42,7 +43,7 @@ onMounted(async() => {
 
 const getMovies = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies', {
+    const response = await axios.get(API_URL + '/api/movies', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -66,7 +67,7 @@ const getMovies = async () => {
 
 const getCategories = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories?pagination=false', {
+    const response = await axios.get(API_URL + '/api/categories?pagination=false', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -84,7 +85,7 @@ const getCategories = async () => {
 
 const getActors = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors?pagination=false', {
+    const response = await axios.get(API_URL + '/api/actors?pagination=false', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -104,7 +105,7 @@ const getActors = async () => {
 
 const onNextPage = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000' + nextPage.value, {
+    const response = await axios.get(API_URL + nextPage.value, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -132,7 +133,7 @@ const onNextPage = async () => {
 
 const onPrevPage = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000' + prevPage.value, {
+    const response = await axios.get(API_URL + prevPage.value, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -162,7 +163,7 @@ const onPrevPage = async () => {
 
 const searchFilter = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies?title=' + search.value, {
+    const response = await axios.get(API_URL + '/api/movies?title=' + search.value, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -182,7 +183,7 @@ const searchFilter = async () => {
 
 const displayEditor = async (id) => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/movies/' + id, {
+    const response = await axios.get(API_URL + '/api/movies/' + id, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -229,7 +230,7 @@ const editMovie = async () => {
   }
 
   try {
-    const request = await axios.patch('http://127.0.0.1:8000/api/movies/' + editMovieData.value.id, data, {
+    const request = await axios.patch(API_URL + '/api/movies/' + editMovieData.value.id, data, {
       headers: {
         'Content-Type': 'application/merge-patch+json',
         'Authorization': 'Bearer ' + token
@@ -265,7 +266,7 @@ const hideDelete = async () => {
 
 const deleteMovie = async () => {
   try {
-    const request = await axios.delete('http://127.0.0.1:8000/api/movies/' + deleteMovieData.value, {
+    const request = await axios.delete(API_URL + '/api/movies/' + deleteMovieData.value, {
       headers: {
         'Authorization': 'Bearer ' + token
       }

@@ -4,13 +4,13 @@ import router from "@/router"
 import Button from './components/Button.vue'
 
 if (!localStorage.getItem('token')) {
-  router.push({ name: 'login' })
+  router.push('/login')
 }
 
 const logout = () => {
   if (localStorage.getItem('token')) {
     localStorage.removeItem('token')
-    router.push({ name: 'login' })
+    router.push('/login')
   }
 }
 </script>

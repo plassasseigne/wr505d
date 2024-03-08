@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import router from "@/router";
 import axios from 'axios'
 
 const data = ref('')
 const next = ref('')
+const API_URL = import.meta.env.VITE_API_URL
 
 onMounted(async() => {
   getMovie()
@@ -13,7 +15,7 @@ const getMovie = async () => {
   try {
     const token = localStorage.getItem('token')
 
-    const response = await axios.get('http://127.0.0.1:8000/api/movies?page=1', {
+    const response = await axios.get(API_URL + '/api/movies?page=1', {
       headers: {
         'Authorization': 'Bearer ' + token
       }

@@ -9,6 +9,7 @@ const id = useRoute().params.id
 
 const data = ref('')
 const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 onMounted(async() => {
   getActor()
@@ -16,7 +17,7 @@ onMounted(async() => {
 
 const getActor = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/actors/' + id, {
+    const response = await axios.get(API_URL + '/api/actors/' + id, {
       headers: {
         'Authorization': 'Bearer ' + token
       }

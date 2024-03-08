@@ -9,6 +9,7 @@ const dataCategories = ref('')
 const nextPage = ref('')
 const prevPage = ref('')
 const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 const editCategoryData = ref('')
 const editCategoryName = ref('')
@@ -28,7 +29,7 @@ onMounted(async() => {
 
 const getCategories = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories', {
+    const response = await axios.get(API_URL + '/api/categories', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -55,7 +56,7 @@ const getCategories = async () => {
 
 const onNextPage = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000' + nextPage.value, {
+    const response = await axios.get(API_URL + nextPage.value, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -83,7 +84,7 @@ const onNextPage = async () => {
 
 const onPrevPage = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000' + prevPage.value, {
+    const response = await axios.get(API_URL + prevPage.value, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -113,7 +114,7 @@ const onPrevPage = async () => {
 
 const searchFilter = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories?name=' + search.value, {
+    const response = await axios.get(API_URL + '/api/categories?name=' + search.value, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -133,7 +134,7 @@ const searchFilter = async () => {
 
 const displayEditor = async (id) => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/categories/' + id, {
+    const response = await axios.get(API_URL + '/api/categories/' + id, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -162,7 +163,7 @@ const editCategory = async () => {
   }
 
   try {
-    const request = await axios.patch('http://127.0.0.1:8000/api/categories/' + editCategoryData.value.id, data, {
+    const request = await axios.patch(API_URL + '/api/categories/' + editCategoryData.value.id, data, {
       headers: {
         'Content-Type': 'application/merge-patch+json',
         'Authorization': 'Bearer ' + token
@@ -204,7 +205,7 @@ const hideDelete = async () => {
 
 const deleteCategory = async () => {
   try {
-    const request = await axios.delete('http://127.0.0.1:8000/api/categories/' + deleteCategoryData.value, {
+    const request = await axios.delete(API_URL + '/api/categories/' + deleteCategoryData.value, {
       headers: {
         'Authorization': 'Bearer ' + token
       }

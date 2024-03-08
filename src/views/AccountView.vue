@@ -6,6 +6,7 @@ import axios from 'axios'
 const dataUser = ref('')
 
 const token = localStorage.getItem('token')
+const API_URL = import.meta.env.VITE_API_URL
 
 onMounted(async() => {
   getUser()
@@ -13,7 +14,7 @@ onMounted(async() => {
 
 const getUser = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/me', {
+    const response = await axios.get(API_URL + '/api/me', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -36,7 +37,7 @@ const editUser = async () => {
   }
 
   try {
-    const request = await axios.patch('http://127.0.0.1:8000/api/me/update', data, {
+    const request = await axios.patch(API_URL + '/api/me/update', data, {
       headers: {
         'Content-Type': 'application/merge-patch+json',
         'Authorization': 'Bearer ' + token
