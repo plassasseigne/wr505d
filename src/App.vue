@@ -1,9 +1,17 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import router from "@/router"
+import Button from './components/Button.vue'
 
 if (!localStorage.getItem('token')) {
   router.push({ name: 'login' })
+}
+
+const logout = () => {
+  if (localStorage.getItem('token')) {
+    localStorage.removeItem('token')
+    router.push({ name: 'login' })
+  }
 }
 </script>
 
@@ -23,16 +31,8 @@ if (!localStorage.getItem('token')) {
             <RouterLink to="/categories">Categories</RouterLink>
           </div>
           <div class="menu__buttons">
-            <RouterLink to="#">
-              <div class="btn">
-                <span>Account</span>
-              </div>
-            </RouterLink>
-            <RouterLink to="#">
-              <div class="btn">
-                <span>Logout</span>
-              </div>
-            </RouterLink>
+            <Button title="Account" link="/account"></Button>
+            <Button @click="logout" title="Logout"></Button>
           </div>
         </div>
       </div>
@@ -135,6 +135,11 @@ if (!localStorage.getItem('token')) {
       text-transform: uppercase;
       font-size: 14px;
     }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 30px;
   }
 }
 
