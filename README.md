@@ -1,29 +1,50 @@
 # wr505d
 
-This template should help get you started developing with Vue 3 in Vite.
+Ce projet a été développé avec Vue3 dans l'objectif de créer une application reliée à une API basique pour un site de streaming. Vous pouvez récupérer la partie back [juste ici](https://github.com/plassasseigne/wr506d).
 
-## Recommended IDE Setup
+## Configuration requise
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Node.js 18.0 minimum
+- Npm
 
-## Customize configuration
+## Installation du projet
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
+- Récupérer le projet
+- Installer les dépendances
 ```sh
 npm install
 ```
-
-### Compile and Hot-Reload for Development
-
+- Dupliquer le fichier .env et le nommer .env.local
+```sh
+cp .env .env.local
+```
+- Remplacer l'URL de l'API par la vôtre
+```sh
+VITE_API_URL=""
+```
+- Initialiser le serveur
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Construire le projet
 
 ```sh
 npm run build
+```
+
+## Identifiants
+
+(Si vous utilisez la partie back)
+
+Admin :
+```sh
+email: user1@mail.com
+password: test123
+```
+
+Utilisateur :
+```sh
+email: user2@mail.com
+password: test123
 ```

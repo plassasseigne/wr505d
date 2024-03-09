@@ -165,8 +165,12 @@ const getMovie = async () => {
     bottom: 40px;
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
     z-index: 2;
+
+    @media (min-width: 1024px) {
+      gap: 40px;
+    }
 
     &-img {
       img {

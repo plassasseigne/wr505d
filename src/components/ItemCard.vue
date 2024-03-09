@@ -43,8 +43,12 @@ defineProps(['data'])
 
 <style lang="scss" scoped>
 .item-card {
-  width: calc(4.347vw * 4);
+  width: calc(4.347vw * 8);
   margin-bottom: 35px;
+
+  @media (min-width: 1024px) {
+    width: calc(4.347vw * 4);
+  }
 
   &:hover {
     .item-card__img {
@@ -97,10 +101,15 @@ defineProps(['data'])
     overflow: hidden;
 
     img {
-      width: calc(4.347vw * 4);
-      height: 345px;
+      width: calc(4.347vw * 8);
+      height: 245px;
       object-fit: cover;
       transition: 0.6s ease;
+
+      @media (min-width: 1024px) {
+        width: calc(4.347vw * 4);
+        height: 345px;
+      }
     }
   }
 

@@ -69,10 +69,14 @@ const login = async () => {
     display: flex;
     overflow: hidden;
     border-radius: 15px;
-    width: calc(4.347vw * 7);
+    width: calc(4.347vw * 16);
     padding: 50px 4.347vw;
     flex-direction: column;
     align-items: center;
+
+    @media (min-width: 1024px) {
+      width: calc(4.347vw * 7);
+    }
   }
 
   &__title {
