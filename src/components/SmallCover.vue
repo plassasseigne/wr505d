@@ -37,7 +37,6 @@ defineProps(['title'])
 
   &__title {
     h1 {
-      margin-top: 70px;
       font-family: 'Penumbra', sans-serif;
       font-size: 64px;
     }
