@@ -167,8 +167,14 @@ const createMovie = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(120vh + 80px);
   padding-top: 80px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  @media (min-width: 1024px) {
+    height: 100vh;
+    margin: 0;
+  }
 
   &__wrapper {
     width: calc(4.347vw * 19);
@@ -176,21 +182,36 @@ const createMovie = async () => {
     display: flex;
     overflow: hidden;
     border-radius: 30px;
+    flex-direction: column;
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+    }
   }
 
   &__form-part {
-    width: calc(4.347vw * 11);
-    padding: 100px calc(4.347vw * 2);
+    width: calc(4.347vw * 19);
+    padding: 50px calc(4.347vw * 2);
     position: relative;
+
+    @media (min-width: 1024px) {
+      width: calc(4.347vw * 11);
+      padding: 100px calc(4.347vw * 2);
+    }
   }
 
   &__poster-part {
-    width: calc(4.347vw * 8);
+    width: calc(4.347vw * 19);
+    padding: 50px calc(4.347vw * 2);
     overflow: hidden;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (min-width: 1024px) {
+      width: calc(4.347vw * 8);
+    }
 
     &__bg {
       position: absolute;
@@ -200,9 +221,14 @@ const createMovie = async () => {
       position: relative;
 
       img {
-        width: calc(4.347vw * 4);
-        height: 350px;
+        width: calc(4.347vw * 8);
+        height: 245px;
         object-fit: cover;
+
+        @media (min-width: 1024px) {
+          width: calc(4.347vw * 4);
+          height: 345px;
+        }
       }
     }
   }
